@@ -19,7 +19,16 @@ pipeline {
         sh ' cat trufflehog '
       }
     }
-    
+    stage ('Source Composition Analysis') {
+      steps {
+         sh 'rm owasp* || true'
+         sh 'wget "https://raw.githubusercontent.com/Manjuvarma/webapp/master/owasp-dependency-check.sh" '
+         sh 'chmod +x owasp-dependency-check.sh'
+         sh 'bash owasp-dependency-check.sh'
+         sh 'cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml'
+        
+      }
+    }
     stage ('Build') {
       steps {
       sh 'mvn clean package'
@@ -27,7 +36,7 @@ pipeline {
     }
      stage ('Deploy-To-Tomcat') {
             steps {
-			sshagent(['71857f97-f00d-4c77-a7d1-8870b09f0ef2']) {
+			sshagent(['ee3c29f7-1033-459f-a644-0d3c22982d78']) {
     sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@54.234.60.48:/home/ubuntu/project/apache-tomcat-9.0.62/webapps/webapp.war'
 				}   
       }       
