@@ -31,9 +31,9 @@ pipeline {
     }
     stage ('SAST') {
       steps {
-        withSonarQubeEnv(credentialsId:'af3127b7-d9f4-42ec-8f0c-3411a6a8acf3') {
-          sh 'mvn Sonar:Sonar'
-          sh 'cat target/Sonar/report-task.txt'
+        withSonarQubeEnv('sonar') {
+          sh 'mvn sonar:sonar'
+          sh 'cat target/sonar/report-task.txt'
         }
       }
     }
