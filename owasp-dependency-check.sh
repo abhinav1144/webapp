@@ -18,7 +18,7 @@ sudo docker pull owasp/dependency-check
 
 sudo docker run --rm \
     --volume $(pwd):/src \
-    --volume "$DATA_DIRECTORY":/var/lib/jenkins/dependency-check/data \
+    --volume "$DATA_DIRECTORY":/usr/share/dependency-check/data \
     --volume "$REPORT_DIRECTORY":/report \
     owasp/dependency-check \
     --scan /src \
